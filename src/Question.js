@@ -1,51 +1,25 @@
-import { useState } from "react";
 
-let Question = ({ state }) => {
-
-    let [question, setQuestion] = useState({
-        text: state.questionlist[state.currentquestionNum - 1].question,
-        correctAnswer: state.questionlist[state.currentquestionNum - 1].correct_answer,
-        answer: [...state.questionlist[state.currentquestionNum - 1].incorrect_answers, state.questionlist[state.currentquestionNum - 1].correct_answer],
-        isCorrect: null,
-
-    })
+import useQuestion from "./useQuestion";
 
 
-    let getRandoemSort = () => {
-        const sort = [0, 1, 2, 3];
-
-        for (let i = sort.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [sort[i], sort[j]] = [sort[j], sort[i]];
-        }
-        return sort
-    }
-
-  
-      const sort = getRandoemSort()
+let Question = () => {
 
 
-    let handelSelection = (value, id) => {
+    const { state, sort, handelSelection } = useQuestion()
 
-        if (value === question.correctAnswer) {
-            setQuestion({ ...question, isCorrect: "correct" });
-        }
-        else {
-            setQuestion({ ...question, isCorrect: "incorrect" })
-        }
-    }
 
+ 
 
 
 
     return (
         <div className="question">
-            <h2>{question.text}</h2>
+            <h2>{state.text}</h2>
             <div className="radiodiv">
-                <div id="option1" className={question.isCorrect === "correct" ? "option correct" : question.isCorrect === "incorrect" ? "option incorrect" : "option"} onClick={() => handelSelection(question.answer[sort[0]], "option1")}>{question.answer[sort[0]]}</div>
-                <div id="option2" className={"option"} onClick={() => handelSelection(question.answer[sort[1]], "option2")}>{question.answer[sort[1]]}</div>
-                <div id="option3" className={"option"} onClick={() => handelSelection(question.answer[sort[2]], "option3")}>{question.answer[sort[2]]}</div>
-                <div id="option4" className={"option"} onClick={() => handelSelection(question.answer[sort[3]], "option4")}>{question.answer[sort[3]]}</div>
+                <div id="option1" className={(state.currentQuestion.option === 1 && state.currentQuestion.isCorrect) === "correct" ? "option correct" : (state.currentQuestion.option === 1 && state.currentQuestion.isCorrect === "incorrect") ? "option incorrect" : "option"} onClick={() => handelSelection(state.currentQuestion.answer[sort[0]], 1)}>{state.currentQuestion.answer[sort[0]]}</div>
+                <div id="option3" className={(state.currentQuestion.option === 3 && state.currentQuestion.isCorrect) === "correct" ? "option correct" : (state.currentQuestion.option === 3 && state.currentQuestion.isCorrect === "incorrect") ? "option incorrect" : "option"} onClick={() => handelSelection(state.currentQuestion.answer[sort[2]], 3)}>{state.currentQuestion.answer[sort[2]]}</div>
+                <div id="option4" className={(state.currentQuestion.option === 4 && state.currentQuestion.isCorrect) === "correct" ? "option correct" : (state.currentQuestion.option === 4 && state.currentQuestion.isCorrect === "incorrect") ? "option incorrect" : "option"} onClick={() => handelSelection(state.currentQuestion.answer[sort[3]], 4)}>{state.currentQuestion.answer[sort[3]]}</div>
+                <div id="option2" className={(state.currentQuestion.option === 2 && state.currentQuestion.isCorrect) === "correct" ? "option correct" : (state.currentQuestion.option === 2 && state.currentQuestion.isCorrect === "incorrect") ? "option incorrect" : "option"} onClick={() => handelSelection(state.currentQuestion.answer[sort[1]], 2)}>{state.currentQuestion.answer[sort[1]]}</div>
             </div>
         </div>
     )
