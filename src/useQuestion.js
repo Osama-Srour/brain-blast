@@ -34,8 +34,7 @@ const useQuestion = () => {
     const [state, setState] = useState(
         {
 
-            currentquestionNum: 1,
-            score: 0,
+
             currentQuestion: {
                 text: questionlist[0].question,
                 correctAnswer: questionlist[0].correct_answer,
@@ -43,7 +42,9 @@ const useQuestion = () => {
                 isCorrect: null,
                 option: 0,
 
-            }
+            },
+            score: 0,
+            currentquestionNum: 1,
 
         }
     );
@@ -64,17 +65,30 @@ const useQuestion = () => {
 
     //when user select the qustion 
     const handelSelection = (value, id) => {
-
         if (value === state.currentQuestion.correctAnswer) {
-            setState({ ...state, score: state.score + 10 ,currentQuestion: {...state.currentQuestion , isCorrect : "correct",option:id }} )
-            
-
-
-
+            setState({ ...state, score: state.score + 10, currentQuestion: { ...state.currentQuestion, isCorrect: "correct", option: id } })
         }
         else {
-            setState({ ...state ,currentQuestion: {...state.currentQuestion ,isCorrect : "correct" ,  option:id }} )
+            setState({ ...state, currentQuestion: { ...state.currentQuestion, isCorrect: "incorrect", option: id } })
         }
+
+        
+            setTimeout(() => {
+
+                setState({
+                    ...state, 
+                    currentquestionNum: state.currentquestionNum + 1,
+                    currentQuestion: {
+                        text: questionlist[state.currentquestionNum].question,
+                        correctAnswer: questionlist[state.currentquestionNum].correct_answer,
+                        answer: [...questionlist[state.currentquestionNum].incorrect_answers, questionlist[state.currentquestionNum].correct_answer],
+                        isCorrect: null,
+                        option: 0,
+
+                    },
+                })
+            }, 5000);
+
 
     }
 

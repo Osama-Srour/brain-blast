@@ -2,19 +2,14 @@
 import useQuestion from "./useQuestion";
 
 
-let Question = () => {
+let Question = ({state, sort, handelSelection}) => {
 
-
-    const { state, sort, handelSelection } = useQuestion()
-
-
- 
 
 
 
     return (
         <div className="question">
-            <h2>{state.text}</h2>
+            <h2>{state.currentQuestion.text}</h2>
             <div className="radiodiv">
                 <div id="option1" className={(state.currentQuestion.option === 1 && state.currentQuestion.isCorrect) === "correct" ? "option correct" : (state.currentQuestion.option === 1 && state.currentQuestion.isCorrect === "incorrect") ? "option incorrect" : "option"} onClick={() => handelSelection(state.currentQuestion.answer[sort[0]], 1)}>{state.currentQuestion.answer[sort[0]]}</div>
                 <div id="option3" className={(state.currentQuestion.option === 3 && state.currentQuestion.isCorrect) === "correct" ? "option correct" : (state.currentQuestion.option === 3 && state.currentQuestion.isCorrect === "incorrect") ? "option incorrect" : "option"} onClick={() => handelSelection(state.currentQuestion.answer[sort[2]], 3)}>{state.currentQuestion.answer[sort[2]]}</div>

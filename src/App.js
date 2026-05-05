@@ -6,7 +6,7 @@ import useQuestion from './useQuestion';
 
 function App() {
 
-const { state } = useQuestion()
+ const { state, sort, handelSelection } = useQuestion()
 
  
   
@@ -29,10 +29,13 @@ const { state } = useQuestion()
     <nav>
       <h1>Question Namber :{state.currentquestionNum}</h1>
       <h1>Score: {state.score}</h1>
-      <button onClick={()=>{alert(state.score)}}> here</button>
     </nav>
 
-    <Question state={state} ></Question>
+    <Question state={state} sort={sort} handelSelection = {handelSelection}></Question>
+        <h1>{state.score}</h1>
+        <h1>{state.currentquestionNum}</h1>
+        {state.currentQuestion.answer}
+        {state.currentquestionNum}
     </>
   );
 }
